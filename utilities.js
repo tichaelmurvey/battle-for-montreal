@@ -312,6 +312,10 @@ function render_question(question, team){
 			.setAuthor({ name: team.name })
 			.setTitle(question_info.name)
 			.setDescription(question_info.description)
+			.setFields({
+				name: 'Time to complete',
+				value: question_info.time
+			})
 			.setColor(Colors.Blue)
 		return embed;
 	}

@@ -24,7 +24,7 @@ module.exports = {
 		const channels = await guild.channels.fetch();
 		for (let channel of channels) {
 			if (channel[1].name.endsWith('-team')) {
-				channel[1].delete();
+				channel[1].delete().catch(console.error);
 			}
 		}
 		//remove all pinned messages
@@ -39,7 +39,7 @@ module.exports = {
 		const num_teams = interaction.options.getNumber('num_teams');
 		//delete existing team roles
 		const roles = await guild.roles.cache.filter(role => role.name.endsWith('team'));
-		roles.forEach(role => role.delete());
+		roles.forEach(async role => await role.delete().catch(console.error));
 		//create the teams
 		for (let i = 0; i < num_teams; i++) {
 			const team = await utilities.add_team(game).then(team => {
@@ -121,7 +121,7 @@ module.exports = {
 		});
 		//delete existing questions channels
 		const questions_channels = await guild.channels.cache.filter(channel => channel.name === 'questions');
-		questions_channels.forEach(channel => channel.delete());
+		questions_channels.forEach(channel => channel.delete().catch(console.error));
 		//Create a questions channel
 		const questions_channel = await game.guild.channels.create({
 			name: "questions",
@@ -134,7 +134,7 @@ module.exports = {
 		//Create a game info channel
 		//delete existing info channels
 		const info_channels = await guild.channels.cache.filter(channel => channel.name === 'game-info');
-		info_channels.forEach(channel => channel.delete());
+		info_channels.forEach(channel => channel.delete().catch(console.error));
 		//Create a game info channel
 		const info_channel = await game.guild.channels.create({
 			name: "game-info",

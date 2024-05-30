@@ -163,7 +163,7 @@ async function update_hider_hand(team){
 	team.hider.hand.forEach(card => {
 		if (card.message){
 			//("deleting card" , card.name, card.message.id)
-			card.message.delete();
+			delete_message(card.message)
 		}
 	});
 	team.hider.hand = [];
@@ -328,8 +328,6 @@ async function update_tricks(team){
 		//create tricks message
 		const tricks_message = await team.channel.send("### Tricks");
 		team.tricks_message = tricks_message;
-		//pin message
-		tricks_message.pin();
 		//add collector
 		const collector = tricks_message.createMessageComponentCollector({ componentType: ComponentType.Button});
 		collector.on('collect', async i => {
@@ -453,7 +451,7 @@ function render_challenge_card(challenge){
 async function end_round(game){
 	game.round_active = false;
 	//remove all cards from teams
-	game.teams.forEach(team => {
+	game.teams.forEach(async team => {
 		//remove seeker cards
 		team.seeker.hand.forEach(card => {
 			if (card.message){
@@ -461,6 +459,7 @@ async function end_round(game){
 			}
 		});
 		team.seeker.hand = [];
+		team.seeker.questions = {};
 		//remove hider cards
 		team.hider.hand.forEach(card => {
 			if (card.message){
@@ -468,6 +467,7 @@ async function end_round(game){
 			}
 		});
 		team.hider.hand = [];
+		team.hider.tricks = {};
 		//remove questions message
 		if (team.questions_message){
 			delete_message(team.questions_message);
@@ -478,16 +478,24 @@ async function end_round(game){
 			delete_message(team.tricks_message);
 			team.tricks_message = null;
 		}
+		//delete any messages that are not the team message
+		const messages = await team.channel.messages.fetch();
+		messages.forEach(message => {
+			if (message !== team.message){
+				delete_message(message);
+			}
+		});
+
 	});
+
 }
 
 function delete_message(message){
 	console.log("deleting message", message.content)
-	try {
-		message.delete();
-	}
-	catch (error){
-		console.log("error deleting message", error)
+	if (message.deletable){
+		message.delete().catch(console.error);
+	} else {
+		console.log("Message not deletable")
 	}
 }
 
@@ -497,7 +505,7 @@ async function start_round(game){
 	game.round += 1;
 	game.round_active = true;
 	//deal cards to each team
-	game.teams.forEach(team => {
+	game.teams.forEach(async team => {
 		if (team.role === 'seeking'){
 			update_questions(team);
 			update_seeker_hand(team);

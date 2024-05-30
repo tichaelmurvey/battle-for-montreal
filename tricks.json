@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Photobomb",
+		"description": "When taking a photo for a photo challenge, you may cover up to half the frame with a team member's body."
+	},
+	{
+		"name": "Off by one",
+		"description": "When you are asked a proximity question, you may instead send the location of the second-closest thing."
+	},
+	{
+		"name": "#Nofilter",
+		"description": "Before sending a photo, you may edit the following settings: Exposure, Contrast, Temperature, Brightness, Saturation, Light balance, Highlights, Shadows"
+	},
+	{
+		"name": "Who can really say?",
+		"description": "When answering a question with more than two possible answers, provide two different answers. One of the answers must be correct, the other can be a lie."
+	},
+	{
+		"name": "Take it slow",
+		"description": "When the seekers ask you a question, you may respond with a video instead of text. You must clearly identify the answer in your video. Your video must be at most 2 minutes long."
+	}
+]

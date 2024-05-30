@@ -1,0 +1,44 @@
+name,description,time
+Take a photo pointing directly up,"As soon as you receive this question, take a photo pointing directly up.
+You must hold your camera directly above your head and point your camera up. 
+You may not obscure the photo.
+You may not move before taking the photo.",Instant
+Take a photo containing three buildings,"Take a photo showing at least some part of 3 different buildings.
+Each building must have a different facade and entrance.
+Your photo must be at least 50% building.",3 mins
+Take a photo containing one tree,"Take a photo showing the entirety of one real tree. No part of the tree may touch the corners of the frame or be behind something.
+The tree must be at least 1 metre tall.",3 mins
+Take a photo of the dep,"Go to the nearest depanneur.
+Take a photo of the main entry. Your photo must show the entire entry.",5 mins
+Take a picture of the chairs in a metro,"Go to the nearest metro station.
+Take a photo of one player sitting on one of the chairs on the platform.
+Your photo must show the entire body of the person sitting.",5 mins
+Take a picture of a body of water,"Take a photo of a body of water at least 1 metre across.
+Your photo must show at least 1 metre of the surface of the water.",2 mins
+Take a picture of a cup of coffee,Get a coffee from a coffee shop. Take a picture of the cup of coffee from all sides and from above. You may not cover any part of the cup.,10 mins
+Send a sign haiku,Send a haiku (5-7-5) made of signs. The signs must be the main sign of a business.,10 mins
+Street,Send the seekers the name of the street closest to you at the time you answer the question.,5 mins
+Send the first letter of your nearest metro station,Send the first letter of your nearest metro station.,1 min
+What is the price of the nearest hotel?,"Send the price of the nearest hotel that shows up on google maps, to the nearest $10.",3 mins
+How good is the local timmies?,Send the star rating on Google Maps of your closest Tim Hortons,1 min
+River or mountain?,"Are you closer to Mt Royal Park, or the St Laurent River?",1 min
+East or west?,"Are you east or west of the seeker’s location?
+East or west is defined using Montreal North as north.",1 min
+North or south?,"Are you north or south of our location?
+North or south is defined using Montreal North as north.",1 min
+Radar,"If the distance between you and the seekers is less than the distance they specify, say yes. Otherwise, say no.",1 min
+Post code match,"Check the post code of the seekers and yourself. Count how many characters are the same in both postcodes. For example, H2J 3P6 and H2J 3A2 share 4 characters.",1 min
+Describe something badly,"Find the closest article to you on Wikimap.wiki.
+Send the seekers one sentence from the body of the article.
+A sentence must be more than 5 words and end with a full stop. You may re-order the words of the sentence any way you like.",10 mins
+Send the length of your nearest park,Send the length of the longest straight side of your nearest park.,1 min
+Take a screenshot of your location,"Zoom to the maximum level possible on google maps.
+Take a screenshot which contains your location marker. You may not crop or edit the screenshot.",2 mins
+Wifi,Look at available wifi networks on your phone. Tell the seekers the network with the most signal.,1 min
+Get up and clap,Stand up and clap as loud as you can ten times.,Instant
+Denomination of nearest church,"Send the christian denomination of your nearest church, e.g. Catholic, Orthodox, Baptist etc.",1 min
+Pic of a tall building,Send a picture of a building more than 3 stories tall. Your picture must contain at least one floor of the building.,5 mins
+Same street,Tell the seekers if you are on the same street as them,Instant
+How do we get to you?,"Use Google Maps to navigate between the seeker’s location and your own.
+List the mode of transport for each of the steps, in order.
+E.g. Walk, Metro, Metro, Walk",3 mins

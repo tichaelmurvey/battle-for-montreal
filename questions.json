@@ -1,0 +1,132 @@
+[
+    {
+        "name": "Take a photo pointing directly up",
+        "description": "As soon as you receive this question, take a photo pointing directly up.\nYou must hold your camera directly above your head and point your camera up. \nYou may not obscure the photo.\nYou may not move before taking the photo.",
+        "time": "Instant"
+    },
+    {
+        "name": "Take a photo containing three buildings",
+        "description": "Take a photo showing at least some part of 3 different buildings.\nEach building must have a different facade and entrance.\nYour photo must be at least 50% building.",
+        "time": "3 mins"
+    },
+    {
+        "name": "Take a photo containing one tree",
+        "description": "Take a photo showing the entirety of one real tree. No part of the tree may touch the corners of the frame or be behind something.\nThe tree must be at least 1 metre tall.",
+        "time": "3 mins"
+    },
+    {
+        "name": "Take a photo of the dep",
+        "description": "Go to the nearest depanneur.\nTake a photo of the main entry. Your photo must show the entire entry.",
+        "time": "5 mins"
+    },
+    {
+        "name": "Take a picture of the chairs in a metro",
+        "description": "Go to the nearest metro station.\nTake a photo of one player sitting on one of the chairs on the platform.\nYour photo must show the entire body of the person sitting.",
+        "time": "5 mins"
+    },
+    {
+        "name": "Take a picture of a body of water",
+        "description": "Take a photo of a body of water at least 1 metre across.\nYour photo must show at least 1 metre of the surface of the water.",
+        "time": "2 mins"
+    },
+    {
+        "name": "Take a picture of a cup of coffee",
+        "description": "Get a coffee from a coffee shop. Take a picture of the cup of coffee from all sides and from above. You may not cover any part of the cup.",
+        "time": "10 mins"
+    },
+    {
+        "name": "Send a sign haiku",
+        "description": "Send a haiku (5-7-5) made of signs. The signs must be the main sign of a business.",
+        "time": "10 mins"
+    },
+    {
+        "name": "Closest street",
+        "description": "Send the seekers the name of the street closest to you at the time you answer the question.",
+        "time": "5 mins"
+    },
+    {
+        "name": "Send the first letter of your nearest metro station",
+        "description": "Send the first letter of your nearest metro station.",
+        "time": "1 min"
+    },
+    {
+        "name": "What is the price of the nearest hotel?",
+        "description": "Send the price of the nearest hotel that shows up on google maps, to the nearest $10.",
+        "time": "3 mins"
+    },
+    {
+        "name": "How good is the local timmies?",
+        "description": "Send the star rating on Google Maps of your closest Tim Hortons",
+        "time": "1 min"
+    },
+    {
+        "name": "River or Mountain?",
+        "description": "Are you closer to Mt Royal Park, or the St Laurent River?",
+        "time": "1 min"
+    },
+    {
+        "name": "East or West",
+        "description": "Are you east or west of the seeker’s location?\nEast or west is defined using Montreal North as north.",
+        "time": "1 min"
+    },
+    {
+        "name": "North or South",
+        "description": "Are you north or south of our location?\nNorth or south is defined using Montreal North as north.",
+        "time": "1 min"
+    },
+    {
+        "name": "Radar",
+        "description": "If the distance between you and the seekers is less than the distance they specify, say yes. Otherwise, say no.",
+        "time": "1 min"
+    },
+    {
+        "name": "Post code match",
+        "description": "Check the post code of the seekers and yourself. Count how many characters are the same in both postcodes. For example, H2J 3P6 and H2J 3A2 share 4 characters.",
+        "time": "1 min"
+    },
+    {
+        "name": "Describe something badly",
+        "description": "Find the closest article to you on Wikimap.wiki.\nSend the seekers one sentence from the body of the article.\nA sentence must be more than 5 words and end with a full stop. You may re-order the words of the sentence any way you like.",
+        "time": "10 mins"
+    },
+    {
+        "name": "Send the length of your nearest park",
+        "description": "Send the length of the longest straight side of your nearest park.",
+        "time": "1 min"
+    },
+    {
+        "name": "Take a screenshot of your location",
+        "description": "Zoom to the maximum level possible on google maps.\nTake a screenshot which contains your location marker. You may not crop or edit the screenshot.",
+        "time": "2 mins"
+    },
+    {
+        "name": "Wifi",
+        "description": "Look at available wifi networks on your phone. Tell the seekers the network with the most signal.",
+        "time": "1 min"
+    },
+    {
+        "name": "Get up and clap",
+        "description": "Stand up and clap as loud as you can ten times.",
+        "time": "Instant"
+    },
+    {
+        "name": "Denomination of nearest church",
+        "description": "Send the christian denomination of your nearest church, e.g. Catholic, Orthodox, Baptist etc.",
+        "time": "1 min"
+    },
+    {
+        "name": "Pic of a tall building",
+        "description": "Send a picture of a building more than 3 stories tall. Your picture must contain at least one floor of the building.",
+        "time": "5 mins"
+    },
+    {
+        "name": "Same street",
+        "description": "Tell the seekers if you are on the same street as them",
+        "time": "Instant"
+    },
+    {
+        "name": "How do we get to you?",
+        "description": "Use Google Maps to navigate between the seeker’s location and your own.\nList the mode of transport for each of the steps, in order.\nE.g. Walk, Metro, Metro, Walk",
+        "time": "3 mins"
+    }
+]

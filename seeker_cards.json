@@ -1,0 +1,437 @@
+[
+    {
+        "name": "Search high and low",
+        "description": "Take a photo of a team member from at least 10 metres above them",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "River or Mountain?",
+                "number": 1
+            },
+            {
+                "name": "Take a photo pointing directly up",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Find yourself",
+        "description": "Spend 5 minutes meditating.\r\nYou must meditate under a tree, sitting on grass.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Take a photo containing one tree",
+                "number": 1
+            },
+            {
+                "name": "River or Mountain?",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Look for tracks",
+        "description": "Find a footprint. The footprint must have been created by a real foot. The footprint must be clear and show an entire foot. \r\nYou may not create the footprint.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Take a screenshot of your location",
+                "number": 3
+            },
+            {
+                "name": "Same street",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Get a lookout",
+        "description": "Go above the tenth floor of a building.",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "Take a photo pointing directly up",
+                "number": 1
+            },
+            {
+                "name": "Get up and clap",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Report a pothole",
+        "description": "Find a pothole and report it to the city of montreal.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Describe something badly",
+                "number": 1
+            },
+            {
+                "name": "Get up and clap X 3",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Find nemo",
+        "description": "Go to a dentist’s office on a street with an alliterative name.",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "Describe something badly",
+                "number": 1
+            },
+            {
+                "name": "Same street",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Catch the golden snitch",
+        "description": "Find something made of real gold. While there, reveal an embarrassing or incriminating fact about another player.",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "Take a picture of a body of water",
+                "number": 1
+            },
+            {
+                "name": "North or South",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Look for Alaska",
+        "description": "Find a picture or depiction of Alaska.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Wifi",
+                "number": 1
+            },
+            {
+                "name": "How do we get to you?",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Hunter x Hunter",
+        "description": "Acquire three gold stars and add them to your outfit.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Denomination of nearest church",
+                "number": 1
+            },
+            {
+                "name": "Get up and clap",
+                "number": 3
+            }
+        ]
+    },
+    {
+        "name": "Desperately Seek Susan",
+        "description": "Find a physical copy of a movie featuring an actor named Susan.",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "Closest street",
+                "number": 3
+            },
+            {
+                "name": "Post code match",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Go window shopping",
+        "description": "Find a window for sale.\r\nThe window must be clearly and inarguably a window.\r\nIt may be part of a larger object that is for sale.\r\nIt may not be part of a real building.",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "Take a photo of the dep",
+                "number": 1
+            },
+            {
+                "name": "Same street",
+                "number": 3
+            }
+        ]
+    },
+    {
+        "name": "Become a detective",
+        "description": "Find a magnifying glass, a pipe, and a deerstalker hat.",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "What is the price of the nearest hotel?",
+                "number": 1
+            },
+            {
+                "name": "Get up and clap",
+                "number": 3
+            }
+        ]
+    },
+    {
+        "name": "Get lucky",
+        "description": "Find a real four-leafed clover.",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "Send a sign haiku",
+                "number": 1
+            },
+            {
+                "name": "Post code match",
+                "number": 3
+            }
+        ]
+    },
+    {
+        "name": "Become the Sea King",
+        "description": "Acquire or create a crown and a trident. Your crown must be golden, and your trident must be at least 1 metre long and have 3 prongs. Declare your dominance over a body of water.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "How do we get to you?",
+                "number": 3
+            },
+            {
+                "name": "Radar",
+                "number": 3
+            }
+        ]
+    },
+    {
+        "name": "Hunt for red october",
+        "description": "Find the word “October” or “Octobre” written in red.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "How good is the local timmies?",
+                "number": 1
+            },
+            {
+                "name": "Radar",
+                "number": 3
+            }
+        ]
+    },
+    {
+        "name": "Spyglass",
+        "description": "Look through a real telescope or binoculars",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Post code match",
+                "number": 3
+            },
+            {
+                "name": "Get up and clap",
+                "number": 3
+            }
+        ]
+    },
+    {
+        "name": "Find Waldo",
+        "description": "Find a depiction of Waldo, or dress up as Waldo. Your Waldo costume must include a striped red and white top or hat.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Take a picture of a cup of coffee",
+                "number": 1
+            },
+            {
+                "name": "North or South",
+                "number": 3
+            }
+        ]
+    },
+    {
+        "name": "Memorise the song “Hide and seek”",
+        "description": "Memorise the lyrics to the song “Hide and Seek”. Perform the song with no assistance in one continuous attempt without any mistakes.",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "Send the length of your nearest park",
+                "number": 1
+            },
+            {
+                "name": "East or West",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Seek justice",
+        "description": "Try on a wig\r\n\r\nHit something with a hammer\r\n\r\nJudge someone",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "Take a photo containing three buildings",
+                "number": 1
+            },
+            {
+                "name": "Wifi",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Find a fantastic beast",
+        "description": "Find an animal that is not a dog, cat, squirrel, bird or human. The animal must be alive.",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "Take a photo containing one tree",
+                "number": 1
+            },
+            {
+                "name": "Take a photo pointing directly up",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Learn a particular set of skills",
+        "description": "Each team member must learn a new skill.\r\nSend a video to the hiders demonstrating your set of skills.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Take a picture of the chairs in a metro",
+                "number": 1
+            },
+            {
+                "name": "Send the first letter of your nearest metro station",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "If You Seek Amy",
+        "description": "Find a letter F, a letter U, a letter C and a letter K. Each letter must be at least 1 foot tall.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Send the first letter of your nearest metro station",
+                "number": 1
+            },
+            {
+                "name": "How do we get to you?",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Form a search party",
+        "description": "Each team member must perform one of the following actions:\r\nPut on a crown\r\n\r\nBlow up a balloon\r\n\r\nDrink an alcoholic beverage\r\n\r\nYou may not perform the same action.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Take a picture of a cup of coffee",
+                "number": 1
+            },
+            {
+                "name": "Radar",
+                "number": 3
+            }
+        ]
+    },
+    {
+        "name": "Close your eyes and count to ten",
+        "description": "As a team, close your eyes and say the numbers 1 to 10.\r\nIf you interrupt each other or say the same number, start again.\r\nYou may not discuss or plan a pattern.\r\nYou may not alternate.\r\nAll players must say at least one number.\r\nYou must leave at least 1 second between numbers.",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Closest street",
+                "number": 3
+            },
+            {
+                "name": "East or West",
+                "number": 3
+            }
+        ]
+    },
+    {
+        "name": "Not lightly do the leaves of Lorien fall",
+        "description": "Find a badge with a leaf on it",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Send the length of your nearest park",
+                "number": 1
+            },
+            {
+                "name": "Pic of a tall building",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Seek attention",
+        "description": "Post a picture on social media. Within ten minutes, earn ten reactions. Your team may not react to the post.",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "North or South",
+                "number": 1
+            },
+            {
+                "name": "Take a screenshot of your location",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Search every part of the map",
+        "description": "Find a map. Go to the location at each corner of that map.",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "East or West",
+                "number": 1
+            },
+            {
+                "name": "North or South",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Warmer",
+        "description": "Completely melt something that is frozen",
+        "method": "OR",
+        "rewards": [
+            {
+                "name": "Take a picture of a cup of coffee",
+                "number": 1
+            },
+            {
+                "name": "Radar",
+                "number": 1
+            }
+        ]
+    },
+    {
+        "name": "Colder",
+        "description": "Cool down something that is above 50 degrees until it is room temperature",
+        "method": "AND",
+        "rewards": [
+            {
+                "name": "River or Mountain?",
+                "number": 1
+            },
+            {
+                "name": "Get up and clap",
+                "number": 1
+            }
+        ]
+    }
+]

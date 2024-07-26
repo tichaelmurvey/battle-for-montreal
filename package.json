@@ -12,7 +12,9 @@
   "dependencies": {
     "csv-parser": "^3.0.0",
     "discord.js": "^14.15.2",
+    "dom-to-image": "^2.6.0",
     "dotenv": "^16.4.5",
+    "node-html-to-image": "^4.0.0",
     "supervisor": "^0.12.0"
   }
 }

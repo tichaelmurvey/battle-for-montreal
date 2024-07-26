@@ -1,0 +1,347 @@
+<html>
+
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+	<style>
+		body {
+			width: max-content;
+		}
+		table {
+			border-collapse: collapse;
+		}
+		td{
+			border: 3px solid black;
+			padding: 5px;
+			text-align: center;
+			font-family: Arial;
+			font-size: 30px;
+			text-wrap: wrap;
+			font-weight: bold;
+		}
+		/* hide the first row of cells */
+		tr.c34 td {
+			width: 100px;
+			height: 0;
+			border: 0;
+			padding: 0;
+		}
+		/* hide the first column of cells */
+		td:first-child {
+			padding: 0 !important;
+			width: 0 !important;
+			min-width: 0 !important;
+			height: 120px;
+			border: 0;
+		}
+	</style>
+	<!-- Iterate over zones adding a style for each one -->
+	{{#each zones}}
+		<style>
+			/* Style for the zone */
+			#{{this.zone}} {
+				background-color: {{this.colour}};
+			}
+		</style>
+	{{/each}}
+</head>
+
+<body class="c48 doc-content">
+	<table class="c41">
+		<thead>
+			<tr class="c34">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td class="c14" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td class="c0" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td class="c17" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td class="c13" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td class="c6" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td class="c28" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td class="c7" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td class="c22" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td class="c5" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td class="c8" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td class="c0" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td class="c9" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td class="c6" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+			</tr>
+			<tr class="c31">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td id="the-triangle" class="c15" colspan="2" rowspan="1">
+					<p class="c1"><span class="c4">The Triangle</span></p>
+				</td>
+				<td id="mt-royal" class="c17" colspan="1" rowspan="2">
+					<p class="c1"><span class="c4">Mt Royal</span></p>
+				</td>
+				<td id="park-ex" class="c45" colspan="3" rowspan="2">
+					<p class="c1"><span class="c4">Park Ex</span></p>
+				</td>
+				<td id="villeray" class="c16" colspan="2" rowspan="2">
+					<p class="c1"><span class="c4">Villeray</span></p>
+				</td>
+				<td id="st-michel" class="c37" colspan="5" rowspan="1">
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1 c3"><span class="c2"></span></p>
+					<p class="c1"><span class="c2">St Michel</span></p>
+				</td>
+			</tr>
+			<tr class="c40">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td id="cote-des-neiges" class="c15" colspan="2" rowspan="6">
+					<p class="c1"><span class="c4">Cote des neiges</span></p>
+				</td>
+				<td id="francois-perrault" class="c19" colspan="2" rowspan="1">
+					<p class="c1"><span class="c4">Fran&ccedil;ois-Perrault</span></p>
+				</td>
+				<td id="little-maghreb" class="c25" colspan="3" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+					<p class="c1"><span class="c2">Little Maghreb</span></p>
+				</td>
+			</tr>
+			<tr class="c24">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td id="outremont" class="c35" colspan="2" rowspan="4">
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1"><span class="c4">Outremont</span></p>
+				</td>
+				<td id="mile-ex" class="c32" colspan="2" rowspan="2">
+					<p class="c1"><span class="c4" >Mile Ex</span></p>
+				</td>
+				<td id="little-italy" class="c7" colspan="1" rowspan="2">
+					<p class="c1"><span class="c4" >Little Italy</span></p>
+				</td>
+				<td id="la-petite-patrie" class="c22" colspan="1" rowspan="3">
+					<p class="c1"><span class="c4">La Petite Patrie</span></p>
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td id="parc-molson" class="c23" colspan="3" rowspan="2">
+					<p class="c1"><span class="c4">Parc Molson</span></p>
+				</td>
+				<td id="nouveau-rosemont" class="c17" colspan="2" rowspan="2">
+					<p class="c1"><span class="c2">Nouveau Rosemont</span></p>
+				</td>
+			</tr>
+			<tr class="c39">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+			</tr>
+			<tr class="c47">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td id="mile-end" class="c20" colspan="3" rowspan="2">
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1"><span class="c4" >Mile End</span></p>
+				</td>
+				<td id="de-lorimer" class="c5" colspan="1" rowspan="5">
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1"><span class="c4">De Lorimer</span></p>
+				</td>
+				<td id="vieux-rosemont" class="c29" colspan="3" rowspan="2">
+					<p class="c1"><span class="c2">Vieux Rosemont</span></p>
+				</td>
+				<td id="olympic-park-and-garden" class="c6" colspan="1" rowspan="5">
+					<p class="c1"><span class="c2">Olympic Park and Garden</span></p>
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+			</tr>
+			<tr class="c18">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td id="laurier-est" class="c22" colspan="1" rowspan="1">
+					<p class="c1"><span class="c4">Laurier Est</span></p>
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+			</tr>
+			<tr class="c43">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td id="mont-royal" class="c10" colspan="4" rowspan="2">
+					<p class="c1"><span class="c4">Mont Royal</span></p>
+				</td>
+				<td id="the-plateau" class="c16" colspan="2" rowspan="3">
+					<p class="c1"><span class="c4" >The Plateau</span></p>
+				</td>
+				<td id="angus" class="c29" colspan="3" rowspan="3">
+					<p class="c1"><span class="c2">Angus</span></p>
+				</td>
+			</tr>
+			<tr class="c42">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td id="victoria-village" class="c14" colspan="1" rowspan="4">
+					<p class="c1"><span class="c4">Victoria Village</span></p>
+				</td>
+				<td id="westmount" class="c0" colspan="1" rowspan="4">
+					<p class="c1"><span class="c4">Westmount</span></p>
+				</td>
+			</tr>
+			<tr class="c30">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td id="mcgill" class="c35" colspan="2" rowspan="1">
+					<p class="c1"><span class="c4">Mcgill</span></p>
+				</td>
+				<td id="mcgill-ghetto" class="c32" colspan="2" rowspan="1">
+					<p class="c1"><span class="c4">Mcgill Ghetto</span></p>
+				</td>
+			</tr>
+			<tr class="c26">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td id="shaughnessy-village" class="c17" colspan="1" rowspan="3">
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1"><span class="c4">Shaughnessy Village</span></p>
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td id="downtown" class="c29" colspan="2" rowspan="5">
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1"><span class="c4">Downtown</span></p>
+				</td>
+				<td id="quartier-des-spectacles" class="c36" colspan="2" rowspan="1">
+					<p class="c1"><span class="c4">Quartier des Spectacles</span></p>
+				</td>
+				<td id="the-village" class="c22" colspan="1" rowspan="2">
+					<p class="c1"><span class="c4">The Village</span></p>
+				</td>
+				<td id="sainte-marie" class="c19" colspan="2" rowspan="6">
+					<p class="c1"><span class="c2">Sainte Marie</span></p>
+				</td>
+				<td id="hochelaga" class="c0" colspan="1" rowspan="6">
+					<p class="c1 c3"><span class="c2"></span></p>
+					<p class="c1"><span class="c2">Hochelaga</span></p>
+				</td>
+				<td id="maisonneuve" class="c17" colspan="2" rowspan="6">
+					<p class="c1 c3"><span class="c2"></span></p>
+					<p class="c1"><span class="c2">Maisonneuve</span></p>
+				</td>
+			</tr>
+			<tr class="c12">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td id="chinatown" class="c36" colspan="2" rowspan="1">
+					<p class="c1"><span class="c4">Chinatown</span></p>
+				</td>
+			</tr>
+			<tr class="c43">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c4"></span></p>
+				</td>
+				<td id="saint-henri" class="c15" colspan="2" rowspan="4">
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1"><span class="c4">Saint Henri</span></p>
+				</td>
+				<td id="old-port" class="c11" colspan="3" rowspan="4">
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1 c3"><span class="c4"></span></p>
+					<p class="c1"><span class="c4">Old Port</span></p>
+				</td>
+			</tr>
+			<tr class="c43">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td id="little-burgundy" class="c17" colspan="1" rowspan="3">
+					<p class="c1"><span class="c4">Little Burgundy</span></p>
+				</td>
+			</tr>
+			<tr class="c33">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+			</tr>
+			<tr class="c46">
+				<td class="c21" colspan="1" rowspan="1">
+					<p class="c1 c3"><span class="c2"></span></p>
+				</td>
+				<td id="griffintown" class="c13" colspan="1" rowspan="1">
+					<p class="c1"><span class="c4">Griffintown</span></p>
+				</td>
+				<td id="cite multimedia" class="c6" colspan="1" rowspan="1">
+					<p class="c1"><span class="c4">Cite Multimedia</span></p>
+				</td>
+		<tbody></tbody>
+		</tr>
+		<tr class="c44">
+			<td class="c21" colspan="1" rowspan="1">
+				<p class="c1 c3"><span class="c4"></span></p>
+			</td>
+			<td id="verdun" class="c15" colspan="2" rowspan="1">
+				<p class="c1 c3"><span class="c4"></span></p>
+				<p class="c1"><span class="c4">Verdun</span></p>
+			</td>
+			<td id="point-st-charles" class="c35" colspan="2" rowspan="2">
+				<p class="c1"><span class="c4">Point St Charles</span></p>
+			</td>
+			<td id="cite-du-havre" class="c20" colspan="3" rowspan="2">
+				<p class="c1"><span class="c4">Cite du Havre</span></p>
+			</td>
+			<td id="jean-drapeau" class="c20" colspan="3" rowspan="1">
+				<p class="c1"><span class="c4">Jean Drapeau</span></p>
+			</td>
+			<td id="old-longueil" class="c25" colspan="3" rowspan="2">
+				<p class="c1"><span class="c2">Old Longueuil</span></p>
+			</td>
+		</tr>
+		<tr class="c40">
+			<td class="c21" colspan="1" rowspan="1">
+				<p class="c1 c3"><span class="c4"></span></p>
+			</td>
+			<td id="nuns-island" class="c15" colspan="2" rowspan="1">
+				<p class="c1 c3"><span class="c4"></span></p>
+				<p class="c1"><span class="c4">Nun&rsquo;s Island</span></p>
+			</td>
+			<td id="ile-notre-dame" class="c20" colspan="3" rowspan="1">
+				<p class="c1"><span class="c4">Ile Notre Dame</span></p>
+			</td>
+		</tr>
+		</thead>
+	</table>
+	<p class="c3 c27"><span class="c38"></span></p>
+</body>
+
+</html>

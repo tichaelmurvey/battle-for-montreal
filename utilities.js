@@ -1,46 +1,94 @@
 const fs = require('fs');
-const seeker_cards = JSON.parse(fs.readFileSync('./seeker_cards.json'));
-const hider_cards = JSON.parse(fs.readFileSync('./hider_cards.json'));
-const question_data = JSON.parse(fs.readFileSync('./questions.json'));
-const trick_data = JSON.parse(fs.readFileSync('./tricks.json'));
+const challenge_cards = JSON.parse(fs.readFileSync('./challenge_cards.json'));
+const battle_cards = JSON.parse(fs.readFileSync('./battle_cards.json'));
+const curse_cards = JSON.parse(fs.readFileSync('./curse_cards.json'));
 const Discord = require('discord.js');
+const nodeHtmlToImage = require('node-html-to-image');
 const { ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType, ThreadAutoArchiveDuration, PermissionsBitField, Colors  } = require('discord.js');
 
-var team_names = ['Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Orange'];
+var team_names = ['Orange','Purple', 'Green', 'Aqua'];
+const colour_codes = {
+	'orange': '#FFB99C',
+	'purple': '#EB9CFF',
+	'green': '#B1FF9C',
+	'aqua': '#97FDFF'
+}
+const initial_file = fs.readFileSync('./map.html', 'utf8');
 
 //team class
 class Team {
 	constructor(channel) {
 		this.name = channel.name;
-		this.role = 'hiding';
+		this.colour = colour_codes[channel.name.split('-')[0]];
 		this.channel = channel;
-		this.players = null;
-		this.seeker = {}
-		this.hider = {}
-		this.seeker.deck = [];
-		this.seeker.hand = [];
-		this.seeker.questions = {};
-		this.hider.deck = [];
-		this.hider.hand = [];
-		this.hider.tricks = {};
+		this.challenge_deck = create_challenge_deck();
+		this.challenge_hand = [];
+		this.curse_deck = create_curse_deck();
+		this.bagels = 1;
+		this.curses = [];
+		this.zones = [];
 		this.game = null;
+		this.instructions_message = null;
+		this.transit = [];
 	}
 }
 
-function create_seeker_deck(){
-	seeker_deck = structuredClone(seeker_cards);
-	//console.log('Seeker deck created', seeker_deck.length);
-	shuffle(seeker_deck);
-	//console.log('Seeker deck shuffled', seeker_deck.length);
-	return seeker_deck;
+class SaveData {
+	constructor(game){
+		this.teams = structuredClone(game.teams);
+		this.battle_deck = structuredClone(game.battle_deck);
+	}
+	clean_data(){
+		this.teams.forEach(team => {
+			team.channel = null;
+			team.game = null;
+			team.instructions_message = null;
+			//clean messages from hand
+			team.challenge_hand.forEach(card => card.message = null);
+		});
+	}
 }
 
-function create_hider_deck(){
-	hider_deck = structuredClone(hider_cards);
+
+async function save_game(game){
+	//pull out necessary information
+	var save_data = new SaveData(game);
+	//remove channel from save data
+	save_data.clean_data();
+	console.log('saving game', save_data);
+	//save game to file
+	fs.writeFileSync('./game.json', JSON.stringify(save_data, function(key, value) {
+		console.log(key, value);
+		return value;
+	}
+	));
+}
+
+function load_game(interaction){
+	//load game from file
+	console.log('loading game');
+	game_data = JSON.parse(fs.readFileSync('./game.json'));
+	//recreate game
+}
+
+function create_challenge_deck(){
+	challenge_deck = structuredClone(challenge_cards);
+	shuffle(challenge_deck);
+	return challenge_deck;
+}
+
+function create_curse_deck(){
+	curse_deck = structuredClone(curse_cards);
+	shuffle(curse_deck);
+	return curse_deck;
+}
+
+function create_battle_deck(){
+	battle_deck = structuredClone(battle_cards);
 	//console.log('Hider deck created', hider_deck.length);
-	shuffle(hider_deck);
+	shuffle(battle_deck);
 	//console.log('Hider deck shuffled', hider_deck.length);
-	return hider_deck;
+	return battle_deck;
 }
 
 function shuffle(array) {
@@ -51,7 +99,7 @@ async function add_team(game){
 	//choose name
 	shuffle(team_names);
 	if (team_names.length === 0){
-		team_names = ['Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Orange'];
+		team_names = ['Orange','Purple', 'Green', 'Aqua'];
 	}
 	const team_color = team_names.pop();
 	const team_name = team_color+ ' team';
@@ -81,44 +129,101 @@ async function add_team(game){
 	});
 	//create team
 	const team = new Team(channel);
+	console.log('Team created', team.name, team.colour);
 	//add game to team
 	team.game = game;
-	//create seeker deck
-	//console.log("seeker cards", seeker_cards[0]);
-	team.seeker.deck = create_seeker_deck();
-	//create hider deck
-	team.hider.deck = create_hider_deck();
-	//return team
-	//console.log('Team created', team.name);
-	//console.log('Seeker deck created', team.seeker.deck.length);
-	//console.log('Hider deck created', team.hider.deck.length);
+	//add team to channel
+	channel.team = team;
 	return team;
 }
 
-//update hand of seeker cards for a team
-async function update_seeker_hand(team){
-	//if there are cards in the hider hand, remove them
-	//console.log("deleting hider cards")
-	team.hider.hand.forEach(card => {
-		if (card.message){
-			//console.log("deleting card" , card.name, card.message.id)
-			delete_message(card.message);
+
+async function instructions_message(team){
+	var content = `# Welcome, ${team.name}! 👋 \n You control **${team.zones.length} neighbourhoods** \n You have **${team.bagels} bagels**.
+## Your transit options:
+${
+	team.transit.join('\n')
+}
+
+## Curses
+Press the button to spend a curse.
+`		
+	//check if team message already exists
+	if (!team.instructions_message){
+		const team_message = await team.channel.send({
+			content: content,
+			components: []
+			})
+			const collector = team_message.createMessageComponentCollector({ componentType: ComponentType.Button});
+			collector.on('collect', async i => {
+				team.curses.splice(Number(i.customId), 1);
+				//send positive interaction response
+				instructions_message(team);
+				i.reply({ content: `Curse used. Let them know in the game channel!`, ephemeral: true });
+				instructions_message(team)
+			});
+	
+		team.instructions_message = team_message;
+		team.instructions_message.pin();
+	} else {
+	//update curses message
+	const curses = team.curses;
+	//if curses exist, add each curses as a button
+	var buttons = [];
+	if (curses.length > 0){
+		if (curses.length <= 5){
+			var i = 0;
+			for (const curse of curses){
+				var action_row = new ActionRowBuilder();
+				////console.log("adding curses", curses)
+				const button = new ButtonBuilder()
+					.setCustomId(String(i))
+					.setLabel(`${curse.name}`)
+					.setStyle(ButtonStyle.Danger);
+				action_row.addComponents(button);
+				buttons.push(action_row);
+				i++
+			}
+		} else {
+			//create multiple action rows with 5 buttons each
+			for (let i = 0; i < curses.length; i += 5){
+				var action_row = new ActionRowBuilder();
+				for (let j = 0; j < 5; j++){
+					if (i + j < curses.length){
+						const curse = curses[i + j];
+					//	//console.log("adding curses", curses)
+						const button = new ButtonBuilder()
+						.setCustomId(String(i))
+						.setLabel(`${curse.name}`)
+						.setStyle(ButtonStyle.Danger);
+						action_row.addComponents(button);
+					}
+				}
+				buttons.push(action_row);
+				}
+			}
 		}
-	});
+		team.instructions_message.edit({
+			content: content,
+			components: buttons
+		});
+	}
+}
+
+//update hand of seeker cards for a team
+async function update_challenge_hand(team){
+	console.log("updating challenge hand")
 	//get current hand
-	var hand = team.seeker.hand;
-	//check length of deck
-	//console.log('Seeker deck length', team.seeker.deck.length);
-	//console.log('Seeker hand length', hand.length);
+	var hand = team.challenge_hand;
 	//check if hand is less than 5
 	while (hand.length < 5){
 		//draw a card
-		if (team.seeker.deck.length === 0){
+		if (team.challenge_deck.length === 0){
 			//console.log('No more cards in deck');
 			await team.channel.send('No more cards in deck');
 			break;
 		}
-		const challenge = team.seeker.deck.pop();
+		const challenge = team.challenge_deck.pop();
 		//add card to hand
 		console.log(" drew a challenge", challenge.name);
 		const message = render_challenge_card(challenge);
@@ -129,15 +234,14 @@ async function update_seeker_hand(team){
 			delete_message(challenge_card);
 			//update hand
 			console.log("got challenge", challenge.name)
-			team.seeker.hand = hand.filter(card => card.challenge.name !== challenge.name);
+			team.challenge_hand = hand.filter(card => card.challenge.name !== challenge.name);
 			//draw new card
-			update_seeker_hand(team);
-			//Send question choice message
-			send_question_message(challenge, team);
-			//remove this card
+			update_challenge_hand(team);
+			//Add bagels
+			team.bagels += Number(challenge.bagels);
+			//update instructions message
+			instructions_message(team);
 		});
-
-
 		hand.push({
 			"challenge": challenge,
 			"message": challenge_card,
@@ -145,294 +249,99 @@ async function update_seeker_hand(team){
 	}
 }
 
-async function update_hider_hand(team){
-	//if there are cards in the seeker hand, remove them
-	////console.log("deleting seeker cards")
-	if (team.seeker.hand.length > 0){
-		team.seeker.hand.forEach(card => {
-			if (card.message){
-				////console.log("deleting card" , card.name, card.message.id)
-				delete_message(card.message);
-			}
-		});
-		//shuffle seeker cards back into seeker deck
-		team.seeker.deck = team.seeker.deck.concat(team.seeker.hand.map(card => card.challenge));
-		team.seeker.hand = [];
+function create_battle_message(game){
+	//check if battle deck is empty
+	if (game.battle_deck.length === 0){
+		//create new battle deck
+		game.battle_deck = create_battle_deck();
 	}
-	//remove current hider hand cards
-	team.hider.hand.forEach(card => {
-		if (card.message){
-			//("deleting card" , card.name, card.message.id)
-			delete_message(card.message)
-		}
-	});
-	team.hider.hand = [];
-	//draw 3 cards
-	for (let i = 0; i < 3; i++){
-		const challenge = team.hider.deck.pop();
-		//add card to hand
-		////console.log(" drew a challenge", challenge);
-		const message = render_hider_challenge_card(challenge);
-		const challenge_card = await team.channel.send(message);
-		const collector = challenge_card.createMessageComponentCollector({ componentType: ComponentType.Button});
-		collector.on('collect', async i => {
-			if (i.customId === 'complete') {
-				//remove card
-				delete_message(challenge_card)
-				//update hand
-				team.hider.hand = team.hider.hand.filter(card => card.challenge !== challenge);
-				//Send question choice message
-				add_trick(team, challenge.reward);
-			}
-		});
-		team.hider.hand.push({
-			"challenge": challenge,
-			"message": challenge_card,
-		});
-	}
+	//draw a battle card and post it to the game channel
+	const battle_card = game.battle_deck.pop();
+	const battle_message = render_battle_card(battle_card);
+	return battle_message;
 }
 
-async function update_questions(team){
-	////console.log(team.seeker.questions)
-	//check if questions message exists
-	if (!team.questions_message){
-		//create questions message
-		const questions_message = await team.channel.send("### Questions");
-		team.questions_message = questions_message;
-		//add collector
-		const collector = questions_message.createMessageComponentCollector({ componentType: ComponentType.Button});
-		collector.on('collect', async i => {
-			//get question
-			var question = i.customId;
-			//trim whitespace from question
-			question = question.trim();
-			////console.log("got question", question)
-			//check number of this question on the team
-			const number = team.seeker.questions[question];
-			//if number is greater than 1, decrease number
-			if (number > 1){
-				team.seeker.questions[question] -= 1;
-			} else {
-				//remove question from team
-				delete team.seeker.questions[question];
-			}
-			//send positive interaction response
-			i.reply({ content: `Question removed`, ephemeral: true });
-			//send question to questions channel
-			const question_channel = team.game.questions_channel;
-			const question_message = render_question(question, team);
-			const question_message_send = await question_channel.send({content: `@everyone`, embeds: [question_message] });
-			//add thread to question message
-			question_message_send.startThread({
-				name: question,
-				autoArchiveDuration: ThreadAutoArchiveDuration.OneDay,
-				reason: 'Question thread'
-			})
-			
-			update_questions(team);
-		});
-	}
-	//update questions message
-	const questions = team.seeker.questions;
-	//if questions exist, add each question as a button
-	if (Object.keys(questions).length > 0){
-		var buttons = [];
-		const questions_list = Object.keys(questions);
-		if (questions_list.length <= 5){
-			for (const question of questions_list){
-				var action_row = new ActionRowBuilder();
-				////console.log("adding question", question)
-				const button = new ButtonBuilder()
-					.setCustomId(question)
-					.setLabel(`${question} x${questions[question]}`)
-					.setStyle(ButtonStyle.Success);
-				action_row.addComponents(button);
-				buttons.push(action_row);
-			}
-		} else {
-			//create multiple action rows with 5 buttons each
-			for (let i = 0; i < questions_list.length; i += 5){
-				var action_row = new ActionRowBuilder();
-				for (let j = 0; j < 5; j++){
-					if (i + j < questions_list.length){
-						const question = questions_list[i + j];
-					//	//console.log("adding question", question)
-						const button = new ButtonBuilder()
-							.setCustomId(question)
-							.setLabel(`${question} x${questions[question]}`)
-							.setStyle(ButtonStyle.Success);
-						action_row.addComponents(button);
-					}
-				}
-				buttons.push(action_row);
-			}
-		}
-		//update message
-		team.questions_message.edit({
-			content: `# Questions 🔎\n** Select a button to ask a question **`,
-			components: buttons
-		});
-	} else {
-		team.questions_message.edit({
-			content: `# Questions 🔎\nYou have no questions right now. Complete challenges to earn questions. 🤷`,
-			components: []
-		});
-	}
-}
-
-// function render_question(question, team){
-// 	//lookup question data, with whitespace trimmed and case insensitve
-// 	const question_info = question_data.find(q => q.name.trim().toLowerCase() === question.trim().toLowerCase());
-// 	//check if question exists
-// 	if (question_info){
-// 		//render question message
-// 		const message = [
-// 			`# New question`,
-// 			`*${team.name} asked:*`,
-// 			`## ${question_info.name}`,
-// 			question_info.description,
-// 			`**Time to complete:** ${question_info.time}`,
-// 			`@everyone`
-// 		];
-// 		return message.join('\n\n');
-// 	} else {
-// 		return `# New question\n
-// *${team.name} asked:* \n
-// **${question}** @everyone`;
+// async function update_curses(team){
+// 	//check if curses message exists
+// 	if (!team.curses_message){
+// 		//create curses message
+// 		const curses_message = await team.channel.send("### Curses");
+// 		team.curses_message = curses_message;
+// 		//add collector
+// 		const collector = curses_message.createMessageComponentCollector({ componentType: ComponentType.Button});
+// 		collector.on('collect', async i => {
+// 			//get curses
+// 			var curse = i.customId;
+// 			//trim whitespace from curses
+// 			curse = curse.trim();
+// 			////console.log("got curses", curses)
+// 			//check number of this curses on the team
+// 			const number = team.curses[curse];
+// 			//if number is greater than 1, decrease number
+// 			if (number > 1){
+// 				team.curses[curse] -= 1;
+// 			} else {
+// 				//remove curses from team
+// 				delete team.curses[curse];
+// 			}
+// 			//send positive interaction response
+// 			update_curses(team);
+// 			i.reply({ content: `Curse used. Send it to the team you want to curse!`, ephemeral: true });
+// 		});
 // 	}
-
+// 	//update curses message
+// 	const curses = team.curses;
+// 	//if curses exist, add each curses as a button
+// 	if (curses.length > 0){
+// 		var buttons = [];
+// 		if (curses.length <= 5){
+// 			for (const curse of curses){
+// 				var action_row = new ActionRowBuilder();
+// 				////console.log("adding curses", curses)
+// 				const button = new ButtonBuilder()
+// 					.setCustomId(curse.name)
+// 					.setLabel(`${curse.name}`)
+// 					.setStyle(ButtonStyle.Danger);
+// 				action_row.addComponents(button);
+// 				buttons.push(action_row);
+// 			}
+// 		} else {
+// 			//create multiple action rows with 5 buttons each
+// 			for (let i = 0; i < curses.length; i += 5){
+// 				var action_row = new ActionRowBuilder();
+// 				for (let j = 0; j < 5; j++){
+// 					if (i + j < curses.length){
+// 						const curse = curses[i + j];
+// 					//	//console.log("adding curses", curses)
+// 						const button = new ButtonBuilder()
+// 							.setCustomId(curse)
+// 							.setLabel(`${curse.name}`)
+// 							.setStyle(ButtonStyle.Success);
+// 						action_row.addComponents(button);
+// 					}
+// 				}
+// 				buttons.push(action_row);
+// 			}
+// 		}
+// 		//update message
+// 		team.curses_message.edit({
+// 			content: `# curses 🔎\n** Press a curse to use it. **`,
+// 			components: buttons
+// 		});
+// 	} else {
+// 		team.curses_message.edit({
+// 			content: `# curses 🔎\nYou have no curses right now. Spend bagels to buy curses. 🤷`,
+// 			components: []
+// 		});
+// 	}
 // }
-
-function render_question(question, team){
-	// 	//lookup question data, with whitespace trimmed and case insensitve
-	const question_info = question_data.find(q => q.name.trim().toLowerCase() === question.trim().toLowerCase());
-	//check if question exists
-	if (question_info){
-		const embed = new Discord.EmbedBuilder()
-			.setAuthor({ name: team.name })
-			.setTitle(question_info.name)
-			.setDescription(question_info.description)
-			.setFields({
-				name: 'Time to complete',
-				value: question_info.time
-			})
-			.setColor(Colors.Blue)
-		return embed;
-	}
-}
-
-async function update_tricks(team){
-	////console.log(team.hider.tricks)
-	//check if tricks message exists
-	if (!team.tricks_message){
-		//create tricks message
-		const tricks_message = await team.channel.send("### Tricks");
-		team.tricks_message = tricks_message;
-		//add collector
-		const collector = tricks_message.createMessageComponentCollector({ componentType: ComponentType.Button});
-		collector.on('collect', async i => {
-			//get trick
-			const trick = i.customId;
-			////console.log("got trick", trick)
-			//check number of this trick on the team
-			const number = team.hider.tricks[trick];
-			//if number is greater than 1, decrease number
-			if (number > 1){
-				team.hider.tricks[trick] -= 1;
-			} else {
-				//remove trick from team
-				delete team.hider.tricks[trick];
-			}
-			//send positive interaction response
-			i.reply({ content: `trick removed`, ephemeral: true });
-			update_tricks(team);
-		});
-	}
-	//update tricks message
-	const tricks = team.hider.tricks;
-	//if tricks exist, add each trick as a button
-	if (Object.keys(tricks).length > 0){
-		const action_row = new ActionRowBuilder();
-		const tricks_list = Object.keys(tricks);
-		for (const trick of tricks_list){
-			//console.log("adding trick", trick)
-			const button = new ButtonBuilder()
-				.setCustomId(trick)
-				.setLabel(`${trick} x${tricks[trick]}`)
-				.setStyle(ButtonStyle.Success);
-			action_row.addComponents(button);
-		}
-		//update message
-		team.tricks_message.edit({
-			content: `
-	# 😉 Tricks \n** Select a button to spend a trick **
-			`,
-			components: [action_row]
-		});
-	} else {
-		team.tricks_message.edit({
-			content: `# Tricks \nYou have no tricks right now. Complete challenges to earn tricks. 🤷`,
-			components: []
-		});
-	}
-
-}
-
-// function render_hider_challenge_card(challenge){
-// 	text = [
-// 		`## 🎴 ${challenge.name}`,
-// 		challenge.description,
-// 		`🎁 **Reward:** ` + challenge.reward
-// 	]
-// 	text = text.join('\n\n');
-// 	//create action row
-// 	const action_row = new ActionRowBuilder()
-// 		.addComponents(
-// 			new Discord.ButtonBuilder()
-// 				.setCustomId('complete')
-// 				.setLabel('Complete')
-// 				.setStyle(Discord.ButtonStyle.Primary),
-// 		);
-// 	//return message
-// 	return {
-// 		content: text,
-// 		components: [action_row]
-// 	};
-// }
-
-function render_hider_challenge_card(challenge){
-	hider_embed = new Discord.EmbedBuilder()
-		.setTitle(`${challenge.name}`)
-		.setDescription(challenge.description)
-		.setColor(Colors.Orange)
-		.setAuthor({ name: 'Hider Challenge Card' })
-		.addFields({
-			name: '🎁 Reward',
-			value: challenge.reward
-		})
-		const action_row = new ActionRowBuilder()
-		.addComponents(
-			new Discord.ButtonBuilder()
-				.setCustomId('complete')
-				.setLabel('Complete')
-				.setStyle(Discord.ButtonStyle.Primary),
-		);
-		return {
-			embeds: [hider_embed],
-			components: [action_row]
-		};
-}
 
 function render_challenge_card(challenge){
 	challenge_embed = new Discord.EmbedBuilder()
 		.setTitle(`${challenge.name}`)
 		.setDescription(challenge.description)
 		.setColor(Colors.Blue)
-		.setAuthor({ name: 'Seeker Challenge Card' })
-		.addFields({
-			name: '🎁 Rewards',
-			value:  challenge.rewards.map(question => `${question.name} x${question.number}`).join(` **${challenge.method}** `)
-		})
+		.setAuthor({ name: 'Challenge Card' })
 		const action_row = new ActionRowBuilder()
 		.addComponents(
 			new Discord.ButtonBuilder()
@@ -440,55 +349,31 @@ function render_challenge_card(challenge){
 				.setLabel('Complete')
 				.setStyle(Discord.ButtonStyle.Primary),
 		);
-		return {
-			content: "_ _",
-			embeds: [challenge_embed],
-			components: [action_row]
-		};
+	if (challenge.bagels){
+		challenge_embed.addFields({name: 'Bagels', value: challenge.bagels});
+	}
+	return {
+		content: "_ _",
+		embeds: [challenge_embed],
+		components: [action_row]
+	};
 	
 }
 
-async function end_round(game){
-	game.round_active = false;
-	//remove all cards from teams
-	game.teams.forEach(async team => {
-		//remove seeker cards
-		team.seeker.hand.forEach(card => {
-			if (card.message){
-				delete_message(card.message);
-			}
-		});
-		team.seeker.hand = [];
-		team.seeker.questions = {};
-		//remove hider cards
-		team.hider.hand.forEach(card => {
-			if (card.message){
-				delete_message(card.message);
-			}
-		});
-		team.hider.hand = [];
-		team.hider.tricks = {};
-		//remove questions message
-		if (team.questions_message){
-			delete_message(team.questions_message);
-			team.questions_message = null;
-		}
-		//remove tricks message
-		if (team.tricks_message){
-			delete_message(team.tricks_message);
-			team.tricks_message = null;
-		}
-		//delete any messages that are not the team message
-		const messages = await team.channel.messages.fetch();
-		messages.forEach(message => {
-			if (message !== team.message){
-				delete_message(message);
-			}
-		});
+function render_battle_card(battle){
+	console.log("rendering battle card", battle)
+	const battle_embed = new Discord.EmbedBuilder()
+		.setTitle(`${battle.name}`)
+		.setDescription(battle.description)
+		.setColor(Colors.Blue)
+		.setAuthor({ name: 'Battle Challenge' })
+	return {
+		content: "_ _",
+		embeds: [battle_embed],
+		components: []
+	};
+	}
 
-	});
-
-}
 
 function delete_message(message){
 	console.log("deleting message", message.content)
@@ -499,99 +384,84 @@ function delete_message(message){
 	}
 }
 
-async function start_round(game){
-	//check if there is a seeker team
-	//set round active
-	game.round += 1;
+async function start_game(game){
 	game.round_active = true;
 	//deal cards to each team
 	game.teams.forEach(async team => {
-		if (team.role === 'seeking'){
-			update_questions(team);
-			update_seeker_hand(team);
-		}
-		else {
-			update_tricks(team);
-			update_hider_hand(team);
-		}
+		//update hand
+		update_challenge_hand(team);
 	});
+	//update map
+	update_map(game);
 }
 
-async function add_trick(team, trick){
-	//console.log("adding trick ", trick)
-	//check if question exists on team already
-	if (team.hider.tricks[trick]){
-		//increase question count
-		team.hider.tricks[trick] += 1;
-	} else {
-		//add question to team
-		team.hider.tricks[trick] = 1;
+async function add_curse(team, number){
+	if (team.curse_deck.length === 0){
+		//create new curse deck
+		team.curse_deck = create_curse_deck();
 	}
-	//update questions message
-	update_tricks(team);
-}
-async function send_question_message(challenge, team){
-	var message = {
-		content: ``,
-		components: []
-	};
-	//check question method
-	if (challenge.method === 'AND') {
-		//add all questions to team
-		for (question of challenge.rewards){
-			//console.log("got question", question.name, question.number)
-			add_question(team, question.name, question.number);
-		}
-		await update_questions(team);
-	} else {
-		//create choice message
-		message.content = "## Choose a question as a reward:";
-		//create actionrow
-		const action_row = new ActionRowBuilder()
-		//add buttons for each question
-		for (question of challenge.rewards){
-			const button = new ButtonBuilder()
-				.setCustomId(question.name +question.number)
-				.setLabel(`${question.name} x${question.number}`)
-				.setStyle(ButtonStyle.Success)
-			action_row.addComponents(button);
-		}
-		message.components.push(action_row);
-		const question_message = await team.channel.send(message);
-		//if choice message, add collector
-		if (message.components.length > 0){
-			const collector = question_message.createMessageComponentCollector({ componentType: ComponentType.Button});
-			collector.on('collect', async i => {
-				//get question
-				const question = i.customId;
-				//console.log("got question", question)
-				//get question number from last character of ID
-				const number = parseInt(question.slice(-1));
-				//get question name
-				const name = question.slice(0, -1);
-				//add question to team
-				add_question(team, name, number);
-				update_questions(team);
-				//remove message
-				delete_message(question_message);
-			});
-		}
-	
-	}
+	//console.log("adding curses ", curses, " x", number)
+	const curse = team.curse_deck.pop();
+	//add curse to deck
+	team.curses.push(curse)
+	//update curses message
 }
 
-async function add_question(team, question, number){
-	//console.log("adding question ", question, " x", number)
-	//check if question exists on team already
-	if (team.seeker.questions[question]){
-		//increase question count
-		team.seeker.questions[question] += number;
-	} else {
-		//add question to team
-		team.seeker.questions[question] = number;
+async function update_map(game){
+	//send message with the current map
+
+	//get current claimed zones for each team
+	var zones = [];
+	//iterate over each team
+	for(const team of game.teams){
+		//iterate over each zone
+		for (const zone of team.zones){
+			//add zone to zones with team colour
+			zones.push({zone: zone, colour: team.colour})
+		}
 	}
-	//update questions message
+	//get the map image
+	const img = await generateMapImage(zones);
+	//send the image
+	console.log("sending image")
+	game.channel.send({files: [{attachment: img}]})
+	.catch(console.error);
 }
+
+async function generateMapImage(zones){
+	console.log(zones);
+	//return image
+	const img = nodeHtmlToImage({
+		html: initial_file,
+		content: {zones: zones}
+  	}).catch(console.error);
+	return img;
+}
+
+function areYouSure(){
+	const modal = new Discord.ModalBuilder()
+		.setTitle('Are you sure?')
+		.setCustomId('confirm')
+	const favoriteColorInput = new Discord.TextInputBuilder()
+		.setCustomId('favoriteColorInput')
+		// The label is the prompt the user sees for this input
+		.setLabel("Ignore this field")
+		// Short means only a single line of text
+		.setStyle(Discord.TextInputStyle.Short);
+	const firstActionRow = new ActionRowBuilder().addComponents(favoriteColorInput);
+	modal.addComponents(firstActionRow);
+	// //create action row with confirm button
+	// const action_row = new ActionRowBuilder()
+	// 	.addComponents(
+	// 		new ButtonBuilder()
+	// 			.setCustomId('confirm')
+	// 			.setLabel('Confirm')
+	// 			.setStyle(ButtonStyle.Success),
+	// 	);
+	// modal.addComponents(action_row);
+	return modal;
+}
+
 
 //export functions
-module.exports = {create_seeker_deck, add_team, update_seeker_hand, update_hider_hand, start_round, end_round};
+module.exports = {instructions_message, add_team, create_battle_deck, start_game, update_map, create_battle_message, add_curse, save_game, load_game};

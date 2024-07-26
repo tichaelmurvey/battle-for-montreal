@@ -1,0 +1,66 @@
+[
+    {
+        "name": "Find the most foreign licence plate.",
+        "description": "Time: 5 minutes\nFind the licence plate from the state or province the furthest away.\nDistance is measured from the capital of the region the licence plate is from."
+    },
+    {
+        "name": "Drink espresso on the go",
+        "description": "One team member must drink a shot of espresso."
+    },
+    {
+        "name": "Find the most expensive car.",
+        "description": "Time: 5 minutes.\nPrice is measured by ticket price advertised by the car company."
+    },
+    {
+        "name": "Find the most expensive item",
+        "description": "5 minutes.\nThe item must have an advertised price e.g. a price tag or sticker\nThe item must be something a person can carry in one hand\nThe item cannot be access to or information about something else, e.g. a key or a gift card"
+    },
+    {
+        "name": "Get wet",
+        "description": "At least one team member must be in water at least 30cm deep"
+    },
+    {
+        "name": "Share an embarrassing fact",
+        "description": "5 minutes\nOne team member must share an embarrassing fact about themselves with the chat.\nThe non-participating teams will vote on which is the most embarrassing."
+    },
+    {
+        "name": "Play catch",
+        "description": "Choose an object. Throw that object at least 10 metres between team members 5 times in a row without the object touching the ground. \nOnce you have chosen, you may not change objects."
+    },
+    {
+        "name": "Find a mushroom",
+        "description": "Find a naturally growing mushroom. First team to send images of a mushroom wins."
+    },
+    {
+        "name": "Photograph the most birds",
+        "description": "10 mins\nEach picture must be of a different bird.\nThe birds must be real and alive."
+    },
+    {
+        "name": "Visit something mid",
+        "description": "Visit something with an exactly 3.5 stars rating on google."
+    },
+    {
+        "name": "Drink a beer in the park",
+        "description": "Acquire a beer. While in a park, completely drink the beer (non-alcoholic beer is acceptable)."
+    },
+    {
+        "name": "Find something interesting.",
+        "description": "10 mins\nVisit something that has a Wikipedia article. The Wikipedia article with the longest body section (by number of words) wins."
+    },
+    {
+        "name": "Visit something excellent",
+        "description": "5 mins\nVisit something with a rating on google maps. Highest rated thing wins.\nIn the case of a tie, the thing with the most ratings wins."
+    },
+    {
+        "name": "Get wet.",
+        "description": "One team member must get into water that is at least a foot deep."
+    },
+    {
+        "name": "Flip a bottle.",
+        "description": "Flip a bottle, causing it to land on its lid and remain upright for at least 1 second.\nYour flip must start with the bottle upright.\nThe bottle must have a screw top."
+    },
+    {
+        "name": "Flip 5 heads in a row.",
+        "description": "Flip a heads five times in a row using a real Canadian coin. The flip must be fair."
+    }
+]
